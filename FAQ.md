@@ -180,7 +180,7 @@ You can avoid this by moving the file/folder in the last snapshot too:
 
 ## Does _Back In Time_ create incremental or full backups?
 
-Back In Time does use `rsync` and its `--hard-links` feature.
+Back In Time does use `rsync` and its `--link-dest` feature.
 Because of that each snapshot is technically a full backup (contains each file)
 but copies only the really changed files (to save disk space) and "reuses" unchanged
 files by setting a so-called "hard-link".
