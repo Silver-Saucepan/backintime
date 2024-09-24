@@ -69,7 +69,7 @@ request is accepted.
   (e.g. `"Hello World"`). Exceptions are when single quotes contained in the
   string (e.g. `"Can't unmount"`).
 - For docstrings follow [Google Style Guide](https://sphinxcontrib-napoleon.readthedocs.org/en/latest/example_google.html) 
-  (see our own [HOWTO about doc generation](common/doc-dev/1_doc_maintenance_howto.md)).
+  (see our own [HOWTO about doc generation](common/doc-dev/1_doc_howto.md)).
 - Avoid the use of automatic formatters like `black` but mention the use of
   them when opening a pull request.
 - Run unit tests before you open a Pull Request. You can run them via
@@ -81,6 +81,7 @@ request is accepted.
   `unittest` rather than `pytest`. If you know the difference please try follow
   the _Classical (aka Detroit) school_ instead of _London (aka mockist)
   school_.
+- See recommendations about [how to handle translatable strings](common/doc-dev/2_localization.md#instructions-for-the-translation-process).
 
 # Resources & Further readings
 
@@ -125,7 +126,6 @@ the packages provided by the official repository of your GNU/Linux distribution.
   - `x11-utils`
   - `python3-pyqt6` (not from _PyPi_ via `pip`)
   - `python3-dbus.mainloop.pyqt6` (not available from _PyPi_ via `pip`)
-  - `libnotify-bin`
   - `policykit-1`
   - `qttranslations6-l10n`
   - `qtwayland6` (if Wayland is used as display server instead of X11)
@@ -149,7 +149,16 @@ the packages provided by the official repository of your GNU/Linux distribution.
   - `gzip`
   - `gettext`
   - `python3-pyfakefs`
-  - `pylint`
+  - Optional but recommended:
+    - `pylint` (>= 3.3.0)
+    - `pycodestyle`
+    - `ruff` (>= 0.6.6)
+    - `codespell`
+ 
+* Dependencies to build documentation
+  - All runtime, build, testing dependencies including the recommended
+  - `mkdocs`
+  - `mkdocs-material`
 
 ## Build and install via `make` system (recommended)
 
@@ -208,6 +217,8 @@ case. The goal is to log into the SSH server on your local computer via
 - Populate the public key to the server executing `ssh-copy-id`.
 - Make the `ssh` instance run.
 - The port `22` (SSH default) should be available.
+- _Authorize_ the key with `$ ssh localhost` and insert your user accounts
+  password.
 
 To test the connection just execute `ssh localhost` and you should see an
 SSH shell **without** being asked for a password.
@@ -250,7 +261,7 @@ enhance _Back In Time_ as a software and as a project. The schedule is
 not fixed, nor is the order of priority.
 
 - [Analyzing code and behavior](#analyzing-code-and-behavior)
-- [Code quality & unit tests]([#code-quality--unit-tests](#code-quality--unit-tests))
+- [Code quality & unit tests](#code-quality--unit-tests)
 - [Issues](#issues)
 - [Replace encryption library EncFS or remove it](#replace-encryption-library-encfs-or-remove-it)
 - [Project infrastructure](#project-infrastructure)
@@ -279,7 +290,8 @@ Considering the three major types of tests (_unit_, _integration_, _system_),
 the current test suite primarily consists of _system tests_. While these
 _system tests_ are valuable, their purpose differs from that of _unit tests_.
 Due to the lack of _unit tests_ in the test suite, the codebase
-has notably low test coverage.
+has notably low test coverage
+(see [Issue #1489](https://github.com/bit-team/backintime/issues/1489)).
 
 The codebase does not adhere to [PEP8](https://peps.python.org/pep-0008/),
 which serves as the minimum Python coding style. Utilizing linters in their
